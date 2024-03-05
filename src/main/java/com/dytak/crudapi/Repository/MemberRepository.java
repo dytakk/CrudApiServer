@@ -6,4 +6,5 @@ import com.dytak.crudapi.Domain.Member;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
 
+
 }
