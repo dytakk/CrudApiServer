@@ -1,26 +1,30 @@
 package com.dytak.crudapi.Controller;
 
-import com.dytak.crudapi.Domain.Member;
 import com.dytak.crudapi.Service.MemberService;
-import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @RestController
-@RequiredArgsConstructor
 public class MainController {
-    final MemberService memberService;
 
-    @RequestMapping(value="/")
-    public Optional<Member> test(){
-        System.out.println("memberServi = " );
-        Optional<Member> result = memberService.test();
-        String test="abc";
 
-        return result;
+    private final MemberService memberService;
+    public MainController(MemberService memberService){
+        this.memberService = memberService;
+    }
+
+    @PostMapping(value="/")
+    public void registerMember(@RequestBody Map<String,String> playerInfo){
+        memberService.join(playerInfo);
+        Map<String,String> result = memberService.findByUserId(1L);
+        System.out.println("playername:" +  result.get("playername"));
+        System.out.println("position:" +  result.get("position"));
     }
 
 
